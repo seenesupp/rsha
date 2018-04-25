@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#Skriptist line haavalt võtmine, peaks olema var
+#Loop mis jooksutab läbi lisa kasutaja
+
+failinimi=$1
+
+i=1
+ 
+while IFS= read line; do    
+    i=$(( i + 1 ))
+    sh lisa_kasutaja $line
+done < $failinimi
+
