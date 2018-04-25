@@ -16,3 +16,11 @@ cd rsha
 
 d) tekita lokaalne repositoorium git susteemi jaoks antud kaustas
 git init
+
+remote seadistamine:
+
+a) git remote add nimi aadress
+git remode add rsha https://github.com/kasutajanimi/reponimi.git
+
+b) git remote kontroll
+git remote -v 
