@@ -1,0 +1,5 @@
+#!/bin/bash
+#Kasutaja loomine ilma paroolita
+
+kasutajanimi=$1
+useradd -m  $kasutajanimi
