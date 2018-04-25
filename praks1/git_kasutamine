@@ -1,5 +1,6 @@
 * root kasutajana:
 installi - apt-get install git
+
 * tavakasutajana:
 esmakordselt:
 
@@ -24,3 +25,14 @@ git remode add rsha https://github.com/kasutajanimi/reponimi.git
 
 b) git remote kontroll
 git remote -v 
+
+põhikasutamine:
+
+a) pane fail jälgimisele:
+git add failinimi
+
+b) lisa kirjeldus muudatuste kohta
+git commit -m "lühikirjelduse lause"
+
+c) lisa kaugrepositooriumi
+git push -uf rsha master
