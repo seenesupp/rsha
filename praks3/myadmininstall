@@ -1,0 +1,10 @@
+#!/bin/bash
+apcheck=$(dpkg-query -W -f='${Status}' phpmyadmin | grep -c 'ok installed')
+
+if [ "$apcheck" = "1" ]; then
+	echo PhpMyAdmin on juba paigaldatud
+else
+	echo Paigaldame PhpMyAdmini
+	apt-get install phpmyadmin --assume-yes
+fi
+
