@@ -1,0 +1,19 @@
+#!/bin/bash
+apcheck=$(dpkg-query -W -f='${Status}' apache2 libapache2-mod-php7.0 php7.0 php7.0-mysql mysql-server phpmyadmin | grep -c 'ok installed')
+
+if [ "$apcheck" = "1" ]; then
+	echo Paigaldame Wordpressi
+#	wget https://wordpress.org/latest.tar.gz
+#	tar xpf latest.tar.gz
+#	cp -r wordpress /var/www/html
+#	chown -R www-data:www-data /var/www/html
+#	find /var/www/html -type d -exec chmod 755 {} \;
+#	find /var/www/html -type f -exec chmod 644 {} \;
+	echo "CREATE USER 'wpuser'@'localhost' IDENTIFIED BY 'qwerty'" | mysql -u root -pqwerty
+	echo "CREATE DATABASE wp_database;" | mysql -u root -pqwerty
+	echo "GRANT ALL ON wp_database.* TO wpuser@localhost;" | mysql -u root -pqwerty
+	echo "FLUSH PRIVILEGES;" | mysql -u root -pqwerty
+else
+	echo Kõik vajaolevad paketid pole paigaldatud
+fi
+
