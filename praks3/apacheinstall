@@ -1,0 +1,11 @@
+#!/bin/bash
+apcheck=$(dpkg-query -W -f='${Status}' apache2 | grep -c 'ok installed')
+
+if [ "$apcheck" = "1" ]; then
+	echo Apache on juba paigaldatud
+else
+	echo Paigaldame apache
+	apt-get install apache2 libapache2-mod-php7.0 --assume-yes
+	service apache2 status
+fi
+
