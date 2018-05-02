@@ -1,0 +1,11 @@
+#!/bin/bash
+apcheck=$(dpkg-query -W -f='${Status}' mysql-server | grep -c 'ok installed')
+
+if [ "$apcheck" = "1" ]; then
+	echo MySQL server on juba paigaldatud
+else
+	echo Paigaldame MySQL serverit
+	apt-get install mysql-server --assume-yes
+	service mysql status
+fi
+
