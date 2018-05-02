@@ -1,0 +1,10 @@
+#!/bin/bash
+apcheck=$(dpkg-query -W -f='${Status}' php | grep -c 'ok installed')
+
+if [ "$apcheck" = "1" ]; then
+	echo PHP on juba paigaldatud
+else
+	echo Paigaldame PHP
+	apt-get install php7.0 php7.0-mysql --assume-yes
+fi
+
