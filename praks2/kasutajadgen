@@ -1,0 +1,12 @@
+#!/bin/bash
+#pwgen -s 8 1
+FILE="kasutajad_gen_paroolidega"
+failinimi=$1
+
+while IFS= read line; do
+	i=$(( i + 1 ))
+        pass=$(pwgen -s 8 1)
+	useradd -m -s /bin/bash $line
+	echo "$line:$pass" | chpasswd
+	echo "$line:$pass" >> $FILE
+done < $failinimi
