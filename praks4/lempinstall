@@ -8,25 +8,47 @@ else
 	echo Toimub pakettide paigaldamine.
 	sleep 5
 
-	apt-get install nginx
-	apt-get install php-fpm
-	apt-get install php-mysql
+	apt-get install nginx --assume-yes
+	apt-get install php-fpm --assume-yes
+	apt-get install php-mysql --assume-yes
 	echo Korrektse MySQL versiooni paigaldamine.
 	sleep 5
 	wget https://dev.mysql.com/get/mysql-apt-config_0.8.9-1_all.deb
 	dpkg -i mysql-apt-config_0.8.9-1_all.deb
 	apt-get update
-	apt-get install mysql-community-server
+	apt-get install mysql-community-server --assume-yes
 
 	echo PHP teenuse käivitamine.
 	sleep 5
 	service php7.0-fpm start
 	systemctl enable  php7.0-fpm
 
-	echo MySQL käivitamine
+	echo MySQL käivitamine.
 	sleep 5
 	service mysql start
 
-	
+	#dunno if work or not
+	echo Nginx seadistamine
+	sleep 5
+	./nginx-conf > /etc/nginx/sites-available/default
+	systemctl enable nginx
+
+	echo PhpMyAdmin paigaldamine.
+	sleep 5
+	apt-get install phpmyadmin --assume-yes
+	phpenmod mcrypt
+
+	echo Wordpress paigaldamine.
+	wget https://wordpress.org/latest.tar.gz
+        tar xpf latest.tar.gz
+        cp -r wordpress /var/www/html
+        chown -R www-data:www-data /var/www/html
+        find /var/www/html -type d -exec chmod 755 {} \;
+        find /var/www/html -type f -exec chmod 644 {} \;
+        echo "CREATE USER 'wpuser'@'localhost' IDENTIFIED BY 'qwerty'" | mysql -u root -pqwerty
+        echo "CREATE DATABASE wp_database;" | mysql -u root -pqwerty
+        echo "GRANT ALL ON wp_database.* TO wpuser@localhost;" | mysql -u root -pqwerty
+        echo "FLUSH PRIVILEGES;" | mysql -u root -pqwerty
+
 fi
 
