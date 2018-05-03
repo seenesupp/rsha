@@ -1,0 +1,32 @@
+#!/bin/bash
+apcheck=$(dpkg-query -W -f='${Status}' nginx php-fpm php-mysql mysql-community-server phpmyadmin | grep -c 'ok installed')
+
+if [ "$apcheck" = "1" ]; then
+	echo Kõik vajaminevad paketid on juba paigaldatud.
+else
+	echo Kõiki vajaolevaid pakette pole paigaldatud.
+	echo Toimub pakettide paigaldamine.
+	sleep 5
+
+	apt-get install nginx
+	apt-get install php-fpm
+	apt-get install php-mysql
+	echo Korrektse MySQL versiooni paigaldamine.
+	sleep 5
+	wget https://dev.mysql.com/get/mysql-apt-config_0.8.9-1_all.deb
+	dpkg -i mysql-apt-config_0.8.9-1_all.deb
+	apt-get update
+	apt-get install mysql-community-server
+
+	echo PHP teenuse käivitamine.
+	sleep 5
+	service php7.0-fpm start
+	systemctl enable  php7.0-fpm
+
+	echo MySQL käivitamine
+	sleep 5
+	service mysql start
+
+	
+fi
+
