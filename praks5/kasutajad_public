@@ -1,0 +1,46 @@
+#!/bin/bash
+kasutajanimi=$1
+fowner=$(ls -ld /home/$kasutajanimi/public/ | awk '{print $3}')
+
+RED='\033[0;31m'
+NC='\033[0m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+
+if [ -d /home/$kasutajanimi/public ]; then
+  echo "${GREEN}Kaust juba eksisteerib${NC}"
+  if [ "$fowner" = "$kasutajanimi" ]; then
+	echo "Õigused on juba korrektsed."
+  else
+  	chown -R $kasutajanimi /home/$kasutajanimi/public
+  	echo "Kaustale said seatud korrektsed õigused" 
+  fi
+else
+  echo "${RED}Kaust ei eksisteeri!${NC}"
+  echo "${YELLOW}Kausta loomine [=               ]"
+  sleep 1
+  echo "Kausta loomine [==              ]"
+  sleep 1
+  echo "Kausta loomine [===             ]"
+  sleep 1
+  echo "Kausta loomine [====            ]"
+  sleep 1
+  echo "Kausta loomine [=======         ]"
+  sleep 3
+  echo "Kausta loomine [=========       ]"
+  sleep 1
+  echo "Kausta loomine [===========     ]"
+  sleep 1
+  echo "Kausta loomine [=============   ]"
+  sleep 2
+  echo "Kausta loomine [==============  ]"
+  sleep 4
+  echo "Kausta loomine [================]${NC}"
+  mkdir /home/$kasutajanimi/public
+  if [ "$fowner" = "$kasutajanimi" ]; then
+        echo "Õigused on juba korrektsed."
+  else
+  	chown -R $kasutajanimi /home/$kasutajanimi/public
+  	echo "Kaustale said seatud korrektsed õigused"
+  fi
+fi
