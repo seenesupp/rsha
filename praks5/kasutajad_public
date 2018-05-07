@@ -36,6 +36,7 @@ else
   echo "Kausta loomine [==============  ]"
   sleep 4
   echo "Kausta loomine [================]${NC}"
+  mkdir /home/$kasutajanimi
   mkdir /home/$kasutajanimi/public
   if [ "$fowner" = "$kasutajanimi" ]; then
         echo "Õigused on juba korrektsed."
