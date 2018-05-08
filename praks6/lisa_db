@@ -1,0 +1,24 @@
+#!/bin/bash
+
+kasutajanimi=$1
+
+#MySQL kasutaja ja andmebaasi loomine
+pass=$(pwgen -s 8 1)
+dbsuffix="_test"
+dbname="$kasutajanimi""_test"
+
+echo "CREATE USER '$kasutajanimi'@'localhost' IDENTIFIED BY '$pass';" | mysql -u root -pqwerty
+echo "CREATE DATABASE $dbname;" | mysql -u root -pqwerty
+echo "GRANT ALL ON $dbname.* TO $kasutajanimi@localhost;" | mysql -u root -pqwerty
+echo "FLUSH PRIVILEGES;" | mysql -u root -pqwerty
+
+if [ -d /home/$kasutajanimi/ ]; then
+        echo "$kasutajanimi:$pass" > /home/$kasutajanimi/.my.cnf
+else
+        mkdir /home/$kasutajanimi
+        echo "$kasutajanimi:$pass" > /home/$kasutajanimi/.my.cnf
+fi
+
+
+
+
