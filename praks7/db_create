@@ -1,0 +1,31 @@
+#!/bin/bash
+#DROP USER 'karlos'@'localhost';
+
+kasutajad=$(ls /home)
+
+#MySQL kasutaja ja andmebaasi loomine
+pass=$(pwgen -s 8 1)
+#dbname="$kasutaja""_test"
+
+for kasutaja in $kasutajad
+do
+echo $kasutaja
+dbname="$kasutaja""_test"
+if [ -f /home/$kasutaja/.my.cnf ]; then
+echo "Konfiguratsioon juba eksisteerib."
+
+else
+
+echo "CREATE USER '$kasutaja'@'localhost' IDENTIFIED BY '$pass';" | mysql -u root -pqwerty
+echo "CREATE DATABASE $dbname;" | mysql -u root -pqwerty
+echo "GRANT ALL ON $dbname.* TO $kasutaja@localhost;" | mysql -u root -pqwerty
+echo "FLUSH PRIVILEGES;" | mysql -u root -pqwerty
+
+if [ -d /home/$kasutaja/ ]; then
+        echo "$kasutajan:$pass" > /home/$kasutaja/.my.cnf
+else
+        mkdir /home/$kasutaja
+        echo "$kasutaja:$pass" > /home/$kasutaja/.my.cnf
+fi
+fi
+done
