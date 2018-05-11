@@ -1,0 +1,5 @@
+SHELL= /bin/bash
+MAILTO= root
+
+0 */2 * * * sh /root/rsha/praks7/db_create >/dev/null 2>&1
+0 0 * * * sh /root/rsha/praks7/db_varundus >/dev/null 2>&1
