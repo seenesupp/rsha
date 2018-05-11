@@ -1,0 +1,18 @@
+#!/bin/bash
+
+kasutajanimi=$1
+db_name="$kasutajanimi""_test"
+backupdir="/mysql_backup"
+datetime=$(date +'%Y-%m-%d-%H.%M')
+filename=/home/$kasutajanimi/.my.cnf
+userpass=$(cat $filename | cut -f2 -d:)
+
+if [ -d /mysql_backup ]; then
+mysqldump -u $kasutajanimi -p$userpass $db_name > $backupdir/$datetime.$db_name.backup.sql
+
+else
+
+mkdir /mysql_backup
+mysqldump -u $kasutajanimi -p$userpass $db_name > $backupdir/$datetime.$db_name.backup.sql
+fi
+
